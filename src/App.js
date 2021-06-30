@@ -43,6 +43,14 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
+  const notificate = (msg, time) => {
+    setNotification(msg)
+    setTimeout(
+      () => setNotification(''),
+      time
+    )
+  }
+
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
@@ -67,10 +75,11 @@ const App = () => {
         <h1>Software anecdotes</h1>
 
         <Menu />
+        {notification && <p>{notification}</p>}
 
         <Switch>
           <Route path='/create' >
-            <CreateNew addNew={addNew} />
+            <CreateNew addNew={addNew} notificate={notificate} />
           </Route>
           <Route path='/about' >
             <About />
